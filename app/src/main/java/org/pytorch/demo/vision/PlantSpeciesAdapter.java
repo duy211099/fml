@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Filter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -14,18 +15,26 @@ import androidx.annotation.Nullable;
 
 import org.pytorch.demo.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class PlantSpeciesAdapter extends ArrayAdapter<PlantSpecies> {
     Context context;
     int layoutResourceId;
     List<PlantSpecies> data;
+    List<PlantSpecies> dataFiltered;
 
     public PlantSpeciesAdapter(@NonNull Context context, int resource, List data) {
         super(context, resource, data);
         this.context = context;
         this.data = data;
+        this.dataFiltered=data;
         this.layoutResourceId = resource;
+    }
+
+    @Override
+    public int getCount() {
+        return dataFiltered.size();
     }
 
     @NonNull
@@ -47,13 +56,50 @@ public class PlantSpeciesAdapter extends ArrayAdapter<PlantSpecies> {
             holder = (PlantSpeciesHolder) row.getTag();
         }
 
-        PlantSpecies plantSpecies = data.get(position);
+//        PlantSpecies plantSpecies = data.get(position);
+        PlantSpecies plantSpecies = dataFiltered.get(position);
+
         holder.iv_background_left.setImageResource(plantSpecies.backgroundLeft);
         holder.iv_background_right.setImageResource(plantSpecies.backgroundRight);
         holder.txt_name_left.setText(plantSpecies.nameLeft);
         holder.txt_name_right.setText(plantSpecies.nameRight);
 
         return row;
+    }
+
+    @Override
+    public Filter getFilter() {
+        return new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence charSequence) {
+                String charString = charSequence.toString();
+                if (charString.isEmpty()) {
+                    dataFiltered = data;
+                } else {
+                    List<PlantSpecies> filteredList = new ArrayList<>();
+                    for (PlantSpecies row : data) {
+
+                        // name match condition. this might differ depending on your requirement
+                        // here we are looking for name or phone number match
+                        if (row.getName().toLowerCase().contains(charString.toLowerCase())) {
+                            filteredList.add(row);
+                        }
+                    }
+
+                    dataFiltered = filteredList;
+                }
+
+                FilterResults filterResults = new FilterResults();
+                filterResults.values = dataFiltered;
+                return filterResults;
+            }
+
+            @Override
+            protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
+                dataFiltered = (ArrayList<PlantSpecies>) filterResults.values;
+                notifyDataSetChanged();
+            }
+        };
     }
 
     class PlantSpeciesHolder

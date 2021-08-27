@@ -23,6 +23,7 @@ public class PlantListSpecies extends AppCompatActivity {
     TextView txt_genus_tab;
     TextView txt_species_tab;
     ListView custom_listview_plant_species;
+    PlantSpeciesAdapter adapter;
 
     ArrayList<PlantSpecies> data;
 
@@ -37,13 +38,34 @@ public class PlantListSpecies extends AppCompatActivity {
         txt_genus_tab = findViewById(R.id.txt_species_list_genus_tab);
         txt_species_tab = findViewById(R.id.txt_species_list_species_tab);
         custom_listview_plant_species = findViewById(R.id.custom_listview_plant_species);
+        SearchView theFilter = (SearchView) findViewById(R.id.searchview_species_list);
 
         SpannableString content = new SpannableString("LOÀI");
         content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
         txt_species_tab.setText(content);
 
-        PlantSpeciesAdapter adapter = new PlantSpeciesAdapter(this, R.layout.custom_listview_plant_species, data);
+        adapter = new PlantSpeciesAdapter(this, R.layout.custom_listview_plant_species, data);
         custom_listview_plant_species.setAdapter(adapter);
+
+        theFilter.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                callSearch(query);
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+//              if (searchView.isExpanded() && TextUtils.isEmpty(newText)) {
+                callSearch(newText);
+//              }
+                return true;
+            }
+
+            public void callSearch(String query) {
+                (PlantListSpecies.this).adapter.getFilter().filter(query);
+            }
+        });
 
         txt_genus_tab.setOnClickListener(v -> {
             finish();

@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".PlantListFamily">
 
-    <SearchView
+    <android.widget.SearchView
         android:id="@+id/searchview_family_list"
         android:layout_width="0dp"
         android:layout_height="45dp"
@@ -16,7 +16,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-    </SearchView>
+    </android.widget.SearchView>
 
     <TextView
         android:id="@+id/txt_family_list_family_tab"
@@ -69,5 +69,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txt_family_list_family_tab"></ListView>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

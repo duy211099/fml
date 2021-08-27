@@ -3,7 +3,8 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/NCKH/flowerrecognizeapp-dev/flowerrecognizeapp-dev/app/src/main/res/layout/activity_plant_list_family.xml" value="0.25" />
+        <entry key="..\:/NCKH/flowerrecognizeapp-dev/flowerrecognizeapp-dev/app/src/main/res/layout/activity_plant_list_family.xml" value="0.33" />
+        <entry key="..\:/NCKH/flowerrecognizeapp-dev/flowerrecognizeapp-dev/app/src/main/res/layout/activity_plant_list_genus.xml" value="0.11041666666666666" />
         <entry key="..\:/NCKH/flowerrecognizeapp-dev/flowerrecognizeapp-dev/app/src/main/res/menu/menu_model.xml" value="0.22" />
       </map>
     </option>

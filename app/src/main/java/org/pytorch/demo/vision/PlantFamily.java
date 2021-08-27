@@ -12,4 +12,8 @@ public class PlantFamily {
         this.description = description;
         this.numGenus = numGenus;
     }
+
+    public String getName() {
+        return name;
+    }
 }

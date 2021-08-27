@@ -12,4 +12,8 @@ public class PlantSpecies {
         this.nameLeft = nameLeft;
         this.nameRight = nameRight;
     }
+
+    public String getName() {
+        return nameLeft +" "+nameRight;
+    }
 }

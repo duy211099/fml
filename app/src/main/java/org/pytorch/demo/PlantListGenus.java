@@ -21,6 +21,7 @@ public class PlantListGenus extends AppCompatActivity {
     TextView txt_genus_tab;
     TextView txt_species_tab;
     ListView custom_listview_plant_genus;
+    PlantFamilyAdapter adapter;
 
     ArrayList<PlantFamily> data;
 
@@ -35,13 +36,35 @@ public class PlantListGenus extends AppCompatActivity {
         txt_genus_tab = findViewById(R.id.txt_genus_list_genus_tab);
         txt_species_tab = findViewById(R.id.txt_genus_list_species_tab);
         custom_listview_plant_genus = findViewById(R.id.custom_listview_plant_genus);
+        SearchView theFilter = (SearchView) findViewById(R.id.searchview_genus_list);
 
         SpannableString content = new SpannableString("CHI");
         content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
         txt_genus_tab.setText(content);
 
-        PlantFamilyAdapter adapter = new PlantFamilyAdapter(this, R.layout.custom_listview_plant_family, data);
+        adapter = new PlantFamilyAdapter(this, R.layout.custom_listview_plant_family, data);
         custom_listview_plant_genus.setAdapter(adapter);
+
+
+        theFilter.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                callSearch(query);
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+//              if (searchView.isExpanded() && TextUtils.isEmpty(newText)) {
+                callSearch(newText);
+//              }
+                return true;
+            }
+
+            public void callSearch(String query) {
+                (PlantListGenus.this).adapter.getFilter().filter(query);
+            }
+        });
 
         txt_family_tab.setOnClickListener(v -> {
             finish();
